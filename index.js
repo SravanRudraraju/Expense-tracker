@@ -19,10 +19,15 @@ db.connect();
 app.use(express.static("public"))
 app.use(bodyParser.urlencoded({extended:true}))
 const __dirname = dirname(fileURLToPath(import.meta.url))
+app.set("view engine", "ejs");
 
-
-app.get("/",(req,res)=>{
-    res.sendFile(__dirname + "/index.html")
+app.get("/", async (req,res)=>{
+    
+    const result = await db.query("select * from expenses ")
+    
+    res.render("index.ejs",{
+        expenses : result.rows
+    })
 })
 
 app.post("/add-expense",(req,res)=>{

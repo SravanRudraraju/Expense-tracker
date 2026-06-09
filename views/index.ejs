@@ -35,19 +35,14 @@
             </thead>
 
             <tbody>
+                <% for(var i=0;i<expenses.length;i++){ %>
                 <tr>
-                    <td>09-Jun-2026</td>
-                    <td>10:30 AM</td>
-                    <td>Lunch</td>
-                    <td>₹120</td>
+                    <td><%= expenses[i].created_at.toLocaleDateString() %></td>
+                    <td><%= expenses[i].created_at.toLocaleTimeString() %></td>
+                    <td> <%= expenses[i].title %>  </td>
+                    <td> <%= expenses[i].amount %>  </td>
                 </tr>
-
-                <tr>
-                    <td>09-Jun-2026</td>
-                    <td>02:15 PM</td>
-                    <td>Bus</td>
-                    <td>₹30</td>
-                </tr>
+                <% } %>
             </tbody>
         </table>
     </div>
