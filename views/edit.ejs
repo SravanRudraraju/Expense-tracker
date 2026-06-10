@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1> EDIT EXPENSE</h1>
+        <form action="/edit/<%=expense.id%>" method="post">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" value="<%= expense.title %>">
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" name="amount" value="<%= expense.amount %>">
+            <button type="submit">Edit Expense</button>
+        </form>
+    </div>
+</body>
+</html>

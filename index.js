@@ -8,44 +8,58 @@ const app = express();
 const port = 3000;
 
 const db = new pg.Client({
-    user : "postgres",
-    host : "localhost",
-    database : "expense-tracker",
-    password : "varma0408",
-    port : "5432"
+    user: "postgres",
+    host: "localhost",
+    database: "expense-tracker",
+    password: "varma0408",
+    port: "5432"
 })
 db.connect();
 
 app.use(express.static("public"))
-app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 const __dirname = dirname(fileURLToPath(import.meta.url))
 app.set("view engine", "ejs");
 
-app.get("/", async (req,res)=>{
-    
+app.get("/", async (req, res) => {
+
     const result = await db.query("select * from expenses ")
-    
-    res.render("index.ejs",{
-        expenses : result.rows
+
+    res.render("index.ejs", {
+        expenses: result.rows
     })
 })
 
-app.post("/add-expense",(req,res)=>{
+app.post("/add-expense", (req, res) => {
     // console.log(req.body.title);
     // console.log(req.body.amount);
     // console.log(typeof req.body.amount);
     const title = req.body.title;
     const amount = parseInt(req.body.amount);
     // console.log(title, amount);
-    db.query("insert into expenses (title,amount) values($1,$2)",[title,amount])
+    db.query("insert into expenses (title,amount) values($1,$2)", [title, amount])
     res.redirect("/")
 })
 
-app.post("/delete/:id",async (req,res)=>{
-    await db.query("delete from expenses where id = $1",[req.params.id])
+app.post("/delete/:id", async (req, res) => {
+    await db.query("delete from expenses where id = $1", [req.params.id])
     res.redirect("/");
 })
 
-app.listen(port,()=>{
+app.get("/edit/:id", async (req, res) => {
+    const id = req.params.id
+    const result = await db.query("select * from expenses where id = $1", [id])
+    res.render("edit", { expense: result.rows[0] })
+})
+
+app.post("/edit/:id", async (req, res) => {
+
+    const id = req.params.id
+    const title = req.body.title
+    const amount = parseInt(req.body.amount);
+    await db.query("update expenses set title = $1 , amount = $2 where id = $3", [title, amount, id])
+    res.redirect("/")
+})
+app.listen(port, () => {
     console.log(`listening at ${port}`);
 })

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
@@ -42,6 +42,7 @@
                     <td> <%= expenses[i].title %>  </td>
                     <td> <%= expenses[i].amount %>  </td>
                     <td><form action="/delete/<%=expenses[i].id%>" method="post"><button>delete</button></form></td>
+                    <td><form action="/edit/<%=expenses[i].id%>" method="get"><button>edit</button></form></td>
                     
                 </tr>
                 <% } %>
