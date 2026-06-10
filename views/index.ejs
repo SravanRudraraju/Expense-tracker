@@ -41,6 +41,8 @@
                     <td><%= expenses[i].created_at.toLocaleTimeString() %></td>
                     <td> <%= expenses[i].title %>  </td>
                     <td> <%= expenses[i].amount %>  </td>
+                    <td><form action="/delete/<%=expenses[i].id%>" method="post"><button>delete</button></form></td>
+                    
                 </tr>
                 <% } %>
             </tbody>

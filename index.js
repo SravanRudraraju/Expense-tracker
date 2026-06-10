@@ -40,6 +40,12 @@ app.post("/add-expense",(req,res)=>{
     db.query("insert into expenses (title,amount) values($1,$2)",[title,amount])
     res.redirect("/")
 })
+
+app.post("/delete/:id",async (req,res)=>{
+    await db.query("delete from expenses where id = $1",[req.params.id])
+    res.redirect("/");
+})
+
 app.listen(port,()=>{
     console.log(`listening at ${port}`);
 })
